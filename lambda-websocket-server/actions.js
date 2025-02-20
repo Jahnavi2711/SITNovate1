@@ -9,8 +9,12 @@ let NAMES_DB = {};
     ENDPOINT = 'xxxxxxxxxxx/execute-api.us-east-1.amazonaws.com/production/'
   see minute 7:00 https://youtu.be/BcWD-M2PJ-8?t=420
 */
-const ENDPOINT = 'r8k7wd5gm1.execute-api.us-east-1.amazonaws.com/production1/';
-const client = new AWS.ApiGatewayManagementApi({ endpoint: ENDPOINT });
+const ENDPOINT = 'nmcd5ujx96.execute-api.ap-south-1.amazonaws.com/website1/';
+const client = new AWS.ApiGatewayManagementApi({
+  apiVersion: '2018-11-29',
+  endpoint: ENDPOINT,
+  region: 'ap-south-1'
+});
 
 const sendToOne = async (id, body) => {
   try {

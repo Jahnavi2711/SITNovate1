@@ -1,0 +1,104 @@
+.App {
+  text-align: center;
+}
+
+.chat-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.message-container {
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 20px 0;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.message.system {
+  background-color: #f5f5f5;
+  font-style: italic;
+}
+
+.message.chat {
+  background-color: #e3f2fd;
+}
+
+.connection-status {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.message.error {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.message.status {
+  background-color: #e8f5e9;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: #666;
+  margin-right: 10px;
+}
+
+.message-form {
+  display: flex;
+  gap: 10px;
+}
+
+.message-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.message-form button {
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.message-form button:hover:not(:disabled) {
+  background-color: #1565c0;
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+.members-list {
+  margin-bottom: 20px;
+}
+
+.members-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.members-list li {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} 

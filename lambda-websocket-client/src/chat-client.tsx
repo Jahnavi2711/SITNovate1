@@ -1,14 +1,7 @@
-import React from 'react'
-import { Button } from '@material-ui/core';
-import ListItemText from '@material-ui/core/ListItemText';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Paper from '@material-ui/core/Paper';
+import React from 'react';
+import { Button, Container, Grid, List, ListItem, ListItemText, Paper } from '@mui/material';
 
-interface Props {
+interface ChatClientProps {
   isConnected: boolean;
   members: string[];
   chatRows: React.ReactNode[];
@@ -18,61 +11,65 @@ interface Props {
   onDisconnect: () => void;
 }
 
-export const ChatClient = (props: Props) => {
+export const ChatClient: React.FC<ChatClientProps> = ({
+  isConnected,
+  members,
+  chatRows,
+  onPublicMessage,
+  onPrivateMessage,
+  onConnect,
+  onDisconnect
+}) => {
   return (
-    <div style={{
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      backgroundColor: '#f4ede3',
-      display: 'flex',
-      alignItems: 'center',
-    }}>
-      <CssBaseline />
-      <Container maxWidth="lg" style={{ height: '90%' }}>
-        <Grid container style={{ height: '100%' }}>
-          <Grid item xs={2} style={{ backgroundColor: '#3e103f', color: 'white' }}>
-            <List component="nav">
-              {props.members.map(item =>
-                <ListItem key={item} onClick={() => { props.onPrivateMessage(item); }} button>
-                  <ListItemText style={{ fontWeight: 800 }} primary={item} />
-                </ListItem>
-              )}
-            </List>
-          </Grid>
-          <Grid style={{ position: 'relative' }} item container direction="column" xs={10} >
-            <Paper style={{ flex: 1 }}>
-              <Grid item container style={{ height: '100%' }} direction="column">
-                <Grid item container style={{ flex: 1 }}>
-                  <ul style={{
-                    paddingTop: 20,
-                    paddingLeft: 44,
-                    listStyleType: 'none',
-                  }}>
-                    {props.chatRows.map((item, i) =>
-                      <li key={i} style={{ paddingBottom: 9 }}>{item}</li>
-                    )}
-                  </ul>
-                </Grid>
-                <Grid item style={{ margin: 10 }}>
-                  {props.isConnected && <Button style={{ marginRight: 7 }} variant="outlined" size="small" disableElevation onClick={props.onPublicMessage}>Send Public Message</Button>}
-                  {props.isConnected && <Button variant="outlined" size="small" disableElevation onClick={props.onDisconnect}>Disconnect</Button>}
-                  {!props.isConnected && <Button variant="outlined" size="small" disableElevation onClick={props.onConnect}>Connect</Button>}
-                </Grid>
-              </Grid>
-              <div style={{
-                position: 'absolute',
-                right: 9,
-                top: 8,
-                width: 12,
-                height: 12,
-                backgroundColor: props.isConnected ? '#00da00' : '#e2e2e2',
-                borderRadius: 50,
-              }} />
-            </Paper>
-          </Grid>
+    <Container>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Paper style={{ padding: 16, marginTop: 16 }}>
+            <h2>WebSocket Chat</h2>
+            <div>Status: {isConnected ? 'Connected' : 'Disconnected'}</div>
+          </Paper>
         </Grid>
-      </Container>
-    </div >
-  )
+
+        <Grid item xs={3}>
+          <Paper style={{ padding: 16 }}>
+            <h3>Online Members</h3>
+            <List>
+              {members.map((member, index) => (
+                <ListItem key={index} button onClick={() => onPrivateMessage(member)}>
+                  <ListItemText primary={member} />
+                </ListItem>
+              ))}
+            </List>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={9}>
+          <Paper style={{ padding: 16, minHeight: 400, maxHeight: 400, overflow: 'auto' }}>
+            {chatRows.map((row, index) => (
+              <div key={index} style={{ margin: '8px 0' }}>{row}</div>
+            ))}
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper style={{ padding: 16 }}>
+            {!isConnected ? (
+              <Button variant="contained" color="primary" onClick={onConnect}>
+                Connect
+              </Button>
+            ) : (
+              <>
+                <Button variant="contained" color="primary" onClick={onPublicMessage} style={{ marginRight: 8 }}>
+                  Send Public Message
+                </Button>
+                <Button variant="contained" color="secondary" onClick={onDisconnect}>
+                  Disconnect
+                </Button>
+              </>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+  );
 };
